@@ -1,0 +1,34 @@
+[
+ {
+  "id": "silabas-trabadas-v2",
+  "title": "Fábrica de Dulces: Sílabas Trabadas",
+  "desc": "Practica las sílabas trabadas con Estrellita STEAM en la fábrica de dulces.",
+  "emoji": "🍬",
+  "color": "#FF6B9D",
+  "file": "silabas-trabadas-v2.enc"
+ },
+ {
+  "id": "magia-dedos-v2",
+  "title": "¡Magia con tus Dedos!",
+  "desc": "Aprende las tablas de multiplicar del 1 al 10 usando tus manos, con mascota, tienda y retos.",
+  "emoji": "🙌",
+  "color": "#9C88FF",
+  "file": "magia-dedos-v2.enc"
+ },
+ {
+  "id": "octochef-romanos-v2",
+  "title": "OctoChef: Números Romanos",
+  "desc": "Ayuda al pulpo chef a leer y escribir números romanos y gana monedas para sus accesorios.",
+  "emoji": "🐙",
+  "color": "#2BB7C9",
+  "file": "octochef-romanos-v2.enc"
+ },
+ {
+  "id": "partes-computador-v2",
+  "title": "Estrellita STEAM: Avería Galáctica",
+  "desc": "Aprende las partes del computador para reparar tu nave espacial.",
+  "emoji": "🚀",
+  "color": "#5B6CFF",
+  "file": "partes-computador-v2.enc"
+ }
+]
