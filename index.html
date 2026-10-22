@@ -6,12 +6,12 @@
 <title>Juegos Universo STEAM · Juegos educativos de matemáticas para niños</title>
 <meta name="description" content="Juegos educativos de Universo STEAM para niños: tablas de multiplicar con los dedos, sumas, restas, multiplicaciones, divisiones y números romanos. Funcionan sin internet.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://universosteam25-lgtm.github.io/juegos-universo-steam/">
+<link rel="canonical" href="https://universosteam25-lgtm.github.io/juegos-universo-steam-j3y9ew1j/">
 <meta property="og:type" content="website"><meta property="og:locale" content="es_CO"><meta property="og:site_name" content="Universo STEAM">
 <meta property="og:title" content="Juegos Universo STEAM · Juegos educativos para niños">
 <meta property="og:description" content="Tablas de multiplicar, operaciones básicas y números romanos en juegos para niños. Se instalan y funcionan sin internet.">
-<meta property="og:url" content="https://universosteam25-lgtm.github.io/juegos-universo-steam/">
-<meta property="og:image" content="https://universosteam25-lgtm.github.io/juegos-universo-steam/icon-512.png">
+<meta property="og:url" content="https://universosteam25-lgtm.github.io/juegos-universo-steam-j3y9ew1j/">
+<meta property="og:image" content="https://universosteam25-lgtm.github.io/juegos-universo-steam-j3y9ew1j/icon-512.png">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#9C88FF">
 <meta name="mobile-web-app-capable" content="yes">
@@ -77,6 +77,11 @@ body{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
 .campN{font-size:12.5px;font-weight:600;color:var(--mut);margin:2px 0 6px}
 @keyframes flow{to{background-position:300% 0}}
 @media(prefers-reduced-motion:reduce){.prog i{animation:none;transition:none}}
+
+input.small{font:600 16px Quicksand,Arial,sans-serif;letter-spacing:0;text-align:left;padding:13px;margin-bottom:8px}
+.campImg{width:100%;max-height:210px;object-fit:cover;border-radius:18px;margin:10px 0 2px;display:block}
+.campD{font-size:14px;font-weight:600;color:var(--tx);margin:4px 0 6px;white-space:pre-wrap;text-align:left}
+.okmsg{color:#1b8a5a;font-weight:700;font-size:14px;margin-top:10px;text-align:center}
 </style>
 </head>
 <body>
@@ -228,7 +233,15 @@ body{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
     <p class="hint">Universo STEAM · Taller de Tareas crea juegos para aprender matemáticas jugando. Con un solo código tu familia disfruta todos los juegos, y se instalan en el celular, la tablet o el computador para usarlos también sin internet.</p>
     <ul class="hint" style="padding-left:20px;margin:0"><li><b>Fábrica de Dulces: Sílabas Trabadas</b>: Practica las sílabas trabadas con Estrellita STEAM en la fábrica de dulces.</li><li><b>¡Magia con tus Dedos!</b>: Aprende las tablas de multiplicar del 1 al 10 usando tus manos, con mascota, tienda y retos.</li><li><b>OctoChef: Números Romanos</b>: Ayuda al pulpo chef a leer y escribir números romanos y gana monedas para sus accesorios.</li><li><b>Estrellita STEAM: Avería Galáctica</b>: Aprende las partes del computador para reparar tu nave espacial.</li></ul>
   </div>
-  <p class="hint" style="text-align:center">¿Aún no tienes un código? Pídelo en Universo STEAM.</p>
+  <div class="card" id="reqCard">
+    <h2>📩 ¿Aún no tienes un código?</h2>
+    <p class="hint">Déjanos tu WhatsApp o tu correo y te enviaremos tu código de acceso a los juegos.</p>
+    <input type="text" class="small" id="reqName" placeholder="Tu nombre (opcional)" maxlength="80" autocomplete="name">
+    <input type="text" class="small" id="reqContact" placeholder="Tu WhatsApp o correo" maxlength="120" autocomplete="email" inputmode="email">
+    <input type="text" id="reqHp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+    <button class="btn alt" id="bReq">Solicitar acceso a los juegos</button>
+    <div class="err" id="reqErr"></div><div class="okmsg" id="reqOk" hidden></div>
+  </div>
 </section>
 
 <section id="vLib" hidden>
@@ -364,13 +377,35 @@ function renderDona(){
 }
 const fmtPct=p=>String(p).replace('.',',')+'%';
 const fmtFecha=t=>new Date(t).toLocaleString('es-CO',{dateStyle:'long',timeStyle:'short'});
-function campHtml(c){return c&&c.on!==false&&typeof c.pct==='number'?'<p class="campT">'+esc(c.title||'Nuestra campaña')+'</p><div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+c.pct+'"><i data-w="'+c.pct+'"></i><b>'+fmtPct(c.pct)+'</b></div><p class="campN">Esta barra se actualiza todos los días.<br>Última actualización: '+esc(fmtFecha(c.updatedAt||Date.now()))+'</p>':'';}
-function showCamp(c){['anCamp','campBox'].forEach(id=>{const e=$(id);e.innerHTML=campHtml(c);e.querySelectorAll('i[data-w]').forEach(i=>requestAnimationFrame(()=>requestAnimationFrame(()=>{i.style.width=i.dataset.w+'%';})));});}
+function campHtml(c,img){return c&&c.on!==false&&typeof c.pct==='number'?(img&&/^data:image\/jpeg;base64,/.test(img)?'<img class="campImg" alt="" src="'+img+'">':'')+'<p class="campT">'+esc(c.title||'Nuestra campaña')+'</p>'+(c.desc?'<p class="campD">'+esc(c.desc)+'</p>':'')+'<div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+c.pct+'"><i data-w="'+c.pct+'"></i><b>'+fmtPct(c.pct)+'</b></div><p class="campN">Esta barra se actualiza todos los días.<br>Última actualización: '+esc(fmtFecha(c.updatedAt||Date.now()))+'</p>':'';}
+function showCamp(c,img){['anCamp','campBox'].forEach(id=>{const e=$(id);e.innerHTML=campHtml(c,img);e.querySelectorAll('i[data-w]').forEach(i=>requestAnimationFrame(()=>requestAnimationFrame(()=>{i.style.width=i.dataset.w+'%';})));});}
 async function loadCamp(){
-  let c=null;try{c=JSON.parse(localStorage.getItem('steamjuegos_camp')||'null');}catch(e){}
-  showCamp(c);
-  if(db&&navigator.onLine){try{const d=await db.doc('campaign/public').get();c=d.exists?d.data():null;try{c?localStorage.setItem('steamjuegos_camp',JSON.stringify(c)):localStorage.removeItem('steamjuegos_camp');}catch(e){}showCamp(c);}catch(e){}}
+  let c=null,img=null;try{c=JSON.parse(localStorage.getItem('steamjuegos_camp')||'null');img=localStorage.getItem('steamjuegos_campimg');}catch(e){}
+  showCamp(c,img);
+  if(db&&navigator.onLine){try{
+    const d=await db.doc('campaign/public').get();c=d.exists?d.data():null;
+    try{c?localStorage.setItem('steamjuegos_camp',JSON.stringify(c)):localStorage.removeItem('steamjuegos_camp');}catch(e){}
+    if(c&&c.img){let cv=null;try{cv=localStorage.getItem('steamjuegos_campimgv');}catch(e){}
+      if(String(cv)!==String(c.img)||!img){const di=await db.doc('campaign/image').get();img=di.exists?di.data().b:null;try{if(img){localStorage.setItem('steamjuegos_campimg',img);localStorage.setItem('steamjuegos_campimgv',String(c.img));}}catch(e){}}}
+    else{img=null;try{localStorage.removeItem('steamjuegos_campimg');localStorage.removeItem('steamjuegos_campimgv');}catch(e){}}
+    showCamp(c,img);}catch(e){}}
 }
+async function sendReq(){
+  const c=$('reqContact').value.trim(),n=$('reqName').value.trim(),E=$('reqErr'),O=$('reqOk');E.textContent='';O.hidden=true;
+  if($('reqHp').value)return;
+  const mail=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(c),dg=c.replace(/\D/g,''),tel=dg.length>=7&&dg.length<=15&&/^[\d\s+()\-]+$/.test(c);
+  if(!mail&&!tel){E.textContent='Escribe un correo válido o tu número de WhatsApp.';return;}
+  let last=0;try{last=+localStorage.getItem('steamjuegos_reqT')||0;}catch(e){}
+  if(Date.now()-last<60000){E.textContent='Espera un momento antes de enviar otra solicitud.';return;}
+  if(!db||!navigator.onLine){E.textContent='Necesitas internet para enviar la solicitud.';return;}
+  $('bReq').disabled=true;$('bReq').textContent='Enviando…';
+  try{await authReady();await db.collection('requests').add({contact:c,name:n,t:Date.now(),status:'new'});
+    try{localStorage.setItem('steamjuegos_reqT',String(Date.now()));}catch(e){}
+    $('reqContact').value='';$('reqName').value='';O.textContent='✅ ¡Gracias! Recibimos tu solicitud. Te responderemos lo más pronto posible.';O.hidden=false;
+  }catch(e){E.textContent='No se pudo enviar. Inténtalo de nuevo en un momento.';}
+  $('bReq').disabled=false;$('bReq').textContent='Solicitar acceso a los juegos';
+}
+$('bReq').onclick=sendReq;
 const hasDona=()=>!!(DONA.breb||DONA.vaki||DONA.nequi);
 function openAnun(det){
   $('anTxt').textContent=DONA.nota||'';$('anDet').hidden=!det;$('anTxt').hidden=!!det;
